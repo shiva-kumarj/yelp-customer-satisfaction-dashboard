@@ -25,9 +25,7 @@ Command-line arguments:
 # ... Rest of the script ...
 
 
-import json
 import pandas as pd 
-import sys
 import argparse
 
 def get_sentiment_noun(sentiment_dict):
