@@ -1,0 +1,4 @@
+conda create -n label-studio python=3.9
+conda activate label-studio
+conda install -c anaconda libpq
+pip install -U label-studio
