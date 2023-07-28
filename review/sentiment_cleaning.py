@@ -5,7 +5,7 @@ This script reads a CSV file containing sentiment analysis results and performs 
 
 Usage:
 - Run the script with the required command-line arguments to clean the DataFrame.
-- The cleaned DataFrame will be saved to a new file in the 'processed_reviews' directory.
+- The cleaned DataFrame will be saved to a new file in the 'cleaned_review_dataset' directory.
 
 Dependencies:
 - pandas: Required for DataFrame operations.
@@ -15,11 +15,10 @@ Author: Shiva Kumar
 Date: July 12, 2023
 
 Usage example:
-python sentiment_cleaning.py -i input_file.csv
+python sentiment_cleaning.py
 
 Command-line arguments:
-  -i, --input    Input file path: Specify the path to the CSV file containing sentiment analysis results.
-
+  None
 """
 
 # ... Rest of the script ...
@@ -27,6 +26,7 @@ Command-line arguments:
 
 import pandas as pd 
 import argparse
+import os
 
 def get_sentiment_noun(sentiment_dict):
   """
@@ -80,24 +80,18 @@ def clean_dataframe(df):
   return df
 
 def write_file_to_disk(df, filename):
-    df.to_csv(filename, index=False,)
+  df.to_csv(filename, index=False,)
 
 if __name__ == '__main__':
-  parser = argparse.ArgumentParser(description='read file input and parse dictionary type columns into separate ones')
 
-  parser.add_argument('-i', '--input', help='review file with sentiment extracted by stanza')
-  # 
-  args = parser.parse_args()
+  directory_path = './sentence_sentiment/'
 
-  if args.input:
-      review_df = pd.read_csv(args.input)
-      review_df = clean_dataframe(review_df)
-      write_file_to_disk(review_df, f'processed_reviews/{args.input}')
+  for i in range(101):
+    file_name = f'review_b_id_{i}.csv'
+    file_path = os.path.join(directory_path, file_name)
 
-  else:
-      print('please provide input file path')
-# df = pd.read_csv(sys.argv[1])
+    review_df = pd.read_csv(file_path)
+    review_df = clean_dataframe(review_df)
+    write_file_to_disk(review_df, f'cleaned_review_dataset/cleaned_data_{i}.csv')
 
-# docs = [{'data': {'text': text}} for text in df['noun']] 
-
-# print(json.dumps(docs))
+  print('Cleaned all review files.')
